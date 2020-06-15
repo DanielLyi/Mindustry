@@ -197,7 +197,7 @@ public class UnitTypes implements ContentList{
                     hitEffect = Fx.blastExplosion;
                     knockback = 0.8f;
                     lifetime = 110f;
-                    bulletWidth = bulletHeight = 14f;
+                    width = height = 14f;
                     collides = true;
                     collidesTiles = true;
                     splashDamageRadius = 20f;
@@ -371,9 +371,9 @@ public class UnitTypes implements ContentList{
                     shake = 1f;
 
                     bullet = new MissileBulletType(2.7f, 12, "missile"){{
-                        bulletWidth = 8f;
-                        bulletHeight = 8f;
-                        bulletShrink = 0f;
+                        width = 8f;
+                        height = 8f;
+                        shrinkY = 0f;
                         drag = -0.003f;
                         homingRange = 60f;
                         keepVelocity = false;
@@ -396,7 +396,7 @@ public class UnitTypes implements ContentList{
             speed = 1.1f;
             accel = 0.02f;
             drag = 0.05f;
-            rotateSpeed = 0.5f;
+            rotateSpeed = 2.5f;
             flying = true;
             lowAltitude = true;
             health = 75000;
@@ -414,6 +414,27 @@ public class UnitTypes implements ContentList{
             }});
         }};
 
+        lich = new UnitType("lich"){{
+            speed = 1.1f;
+            accel = 0.02f;
+            drag = 0.05f;
+            rotateSpeed = 2.5f;
+            flying = true;
+            lowAltitude = true;
+            health = 75000;
+            engineOffset = 38;
+            engineSize = 7.3f;
+            hitsize = 58f;
+
+            weapons.add(new Weapon(){{
+                y = 1.5f;
+                reload = 28f;
+                alternate = true;
+                ejectEffect = Fx.shellEjectSmall;
+                bullet = Bullets.standardCopper;
+                shootSound = Sounds.shoot;
+            }});
+        }};
 
         vanguard = new UnitType("vanguard"){{
             speed = 1.3f;
@@ -487,8 +508,8 @@ public class UnitTypes implements ContentList{
                 alternate = true;
 
                 bullet = new BasicBulletType(2.5f, 9){{
-                    bulletWidth = 7f;
-                    bulletHeight = 9f;
+                    width = 7f;
+                    height = 9f;
                     lifetime = 60f;
                     shootEffect = Fx.shootSmall;
                     smokeEffect = Fx.shootSmallSmoke;

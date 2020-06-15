@@ -3,6 +3,7 @@ package mindustry.world.blocks.units;
 import arc.graphics.g2d.*;
 import arc.math.*;
 import arc.util.*;
+import mindustry.*;
 import mindustry.content.*;
 import mindustry.entities.*;
 import mindustry.entities.units.*;
@@ -11,13 +12,15 @@ import mindustry.graphics.*;
 import mindustry.type.*;
 import mindustry.ui.*;
 import mindustry.world.blocks.payloads.*;
+import mindustry.world.consumers.*;
 import mindustry.world.meta.*;
 
-import static mindustry.Vars.state;
+import static mindustry.Vars.*;
 
 public class Reconstructor extends UnitBlock{
     public float constructTime = 60 * 2;
     public UnitType[][] upgrades = {};
+    public int[] capacities;
 
     public Reconstructor(String name){
         super(name);
@@ -31,6 +34,11 @@ public class Reconstructor extends UnitBlock{
     }
 
     @Override
+    public TextureRegion[] icons(){
+        return new TextureRegion[]{region, outRegion, topRegion};
+    }
+
+    @Override
     public void setBars(){
         super.setBars();
         bars.add("progress", entity -> new Bar("bar.progress", Pal.ammo, ((ReconstructorEntity)entity)::fraction));
@@ -41,6 +49,19 @@ public class Reconstructor extends UnitBlock{
         super.setStats();
 
         stats.add(BlockStat.productionTime, constructTime / 60f, StatUnit.seconds);
+    }
+
+    @Override
+    public void init(){
+        capacities = new int[Vars.content.items().size];
+        if(consumes.has(ConsumeType.item) && consumes.get(ConsumeType.item) instanceof ConsumeItems){
+            for(ItemStack stack : consumes.<ConsumeItems>get(ConsumeType.item).items){
+                capacities[stack.item.id] = Math.max(capacities[stack.item.id], stack.amount * 2);
+                itemCapacity = Math.max(itemCapacity, stack.amount * 2);
+            }
+        }
+
+        super.init();
     }
 
     public class ReconstructorEntity extends UnitBlockEntity{
@@ -58,12 +79,17 @@ public class Reconstructor extends UnitBlock{
         }
 
         @Override
+        public int getMaximumAccepted(Item item){
+            return capacities[item.id];
+        }
+
+        @Override
         public void draw(){
             Draw.rect(region, x, y);
 
             //draw input
             for(int i = 0; i < 4; i++){
-                if(blends(this, i) && i != rotation()){
+                if(blends(i) && i != rotation()){
                     Draw.rect(inRegion, x, y, i * 90);
                 }
             }

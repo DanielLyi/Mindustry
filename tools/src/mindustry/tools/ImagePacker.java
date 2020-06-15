@@ -87,6 +87,14 @@ public class ImagePacker{
             }
 
             @Override
+            public AtlasRegion find(String name, String def){
+                if(!regionCache.containsKey(name)){
+                    return (AtlasRegion)regionCache.get(def);
+                }
+                return (AtlasRegion)regionCache.get(name);
+            }
+
+            @Override
             public boolean has(String s){
                 return regionCache.containsKey(s);
             }
@@ -177,6 +185,11 @@ public class ImagePacker{
         GenRegion(String name, Fi path){
             this.name = name;
             this.path = path;
+        }
+
+        @Override
+        public boolean found(){
+            return !invalid;
         }
 
         static void validate(TextureRegion region){
