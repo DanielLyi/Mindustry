@@ -140,6 +140,7 @@ public class CustomRulesDialog extends BaseDialog{
         number("$rules.buildspeedmultiplier", f -> rules.buildSpeedMultiplier = f, () -> rules.buildSpeedMultiplier);
         number("$rules.deconstructrefundmultiplier", false, f -> rules.deconstructRefundMultiplier = f, () -> rules.deconstructRefundMultiplier, () -> !rules.infiniteResources);
         number("$rules.blockhealthmultiplier", f -> rules.blockHealthMultiplier = f, () -> rules.blockHealthMultiplier);
+        number("$rules.blockdamagemultiplier", f -> rules.blockDamageMultiplier = f, () -> rules.blockDamageMultiplier);
 
         main.button("$configure",
             () -> loadoutDialog.show(Blocks.coreShard.itemCapacity, rules.loadout,
@@ -160,7 +161,6 @@ public class CustomRulesDialog extends BaseDialog{
 
         title("$rules.title.enemy");
         check("$rules.attack", b -> rules.attackMode = b, () -> rules.attackMode);
-        check("$rules.enemyCheat", b -> rules.enemyCheat = b, () -> rules.enemyCheat);
         number("$rules.enemycorebuildradius", f -> rules.enemyCoreBuildRadius = f * tilesize, () -> Math.min(rules.enemyCoreBuildRadius / tilesize, 200));
 
         title("$rules.title.environment");

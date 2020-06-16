@@ -51,6 +51,7 @@ public class UnitType extends UnlockableContent{
     public boolean flipBackLegs = true;
 
     public int itemCapacity = 30;
+    public int ammoCapacity = 100;
     public int drillTier = -1;
     public float buildSpeed = 1f, mineSpeed = 1f;
 
@@ -86,6 +87,7 @@ public class UnitType extends UnlockableContent{
         Unitc unit = constructor.get();
         unit.team(team);
         unit.type(this);
+        unit.ammo(ammoCapacity); //fill up on ammo upon creation
         return unit;
     }
 
@@ -342,7 +344,7 @@ public class UnitType extends UnlockableContent{
 
     public void drawLight(Unitc unit){
         if(lightRadius > 0){
-            Drawf.light(unit, lightRadius, lightColor, lightOpacity);
+            Drawf.light(unit.team(), unit, lightRadius, lightColor, lightOpacity);
         }
     }
 

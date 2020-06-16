@@ -514,7 +514,6 @@ public class UnitTypes implements ContentList{
                     shootEffect = Fx.shootSmall;
                     smokeEffect = Fx.shootSmallSmoke;
                     tileDamageMultiplier = 0.15f;
-                    ammoMultiplier = 2;
                 }};
             }});
         }};
@@ -530,7 +529,7 @@ public class UnitTypes implements ContentList{
             range = 70f;
             itemCapacity = 70;
             health = 400;
-            buildSpeed = 0.6f;
+            buildSpeed = 0.5f;
             engineOffset = 6.5f;
             hitsize = 8f;
         }};
